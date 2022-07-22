@@ -1,0 +1,60 @@
+1. IDE
+    .idea
+
+2. git
+    .gitignore
+
+3. gradle 
+    build.gradle
+    .gradle
+    gradle
+    gradlew
+    gradlew.bat
+    settings.gradle
+
+4. library
+    lib
+
+5. enterprise
+    logs
+
+6. src
+    java
+        1. annotation
+            validation
+            loginSession
+        2. common
+            utility class
+                calendar
+                file
+                agency
+                afilt
+                image
+                md5
+                restTemplate
+                stringEncrypt
+            springContext
+        3. config
+            aspect
+            jdbcTokenStore
+            provider
+            jdbcConfig
+            oauth
+            redis
+            security
+            webMvc
+        4. consts
+            enum class
+        5. exception
+        6. controller
+        7. service
+        8. mapper
+        9. dto
+        *. eai
+            test code
+    resources
+
+7. test
+
+
+

@@ -1,0 +1,185 @@
+1. compile
+    1. gson
+        1. for Seriallize or DeSerialize
+
+    2. beanUtils
+        1. reflection 기능을 활용할 때, object handling 목적으로 사용한다.
+        2. property 복제를 간편하게 할 수 있다.
+        3. Reflection/Introspection APIs 기능을 쉽게 사용하도록 Wrapper 역할이다.
+        1) commons-collections
+            1. 자바 컬렉션 프레임워크의 상속구조를 확장한다.
+        2) commons-logging
+            1. 인터페이스이므로 자체적으로 구현을 하지는 않는다.
+            2. Log4j, Java1.4Logging 같은 Logging API에 로깅 요청을 전달한다.
+
+    3. jaxen
+        1. XPath: XML 문서의 특정 요소 혹은 속성에 접근하기 위한 경로를 지정하는 언어
+        2. jaxen: XPath Engine
+
+    4. commons-lang
+        1. 필요할법한 유틸리티 클래스를 미리 만들어 놓은 것
+        2. 문자열 처리 (StringUtils) - NullPointException 고려를 안 해도 됨
+
+    5. httpClient
+        1. Thread에 안정적인 기능을 제공 (4버전)
+        2. RestAPI 개발에 필요한 기능을 제공하는 라이브러리
+        3. HTTP 통신을 이용해 메세지 송수신을 손쉽게 처리할 수 있는 기능을 제공하는 라이브러리다. (오픈소스)
+        4. httpClient5는 4 이하 버전과 호환되지 않는 별도의 구조를 가진다.
+            1. HTTP/2 지원
+            2. 기반 기술이 완전히 비동기식으로 변경 (= 비동기응답처리 지원)
+            3. 지원정책 3가지 (FORCE_HTTP1, FORCE_HTTP2, NEGOTIATE)
+                1. NEGOTIATE는 HTTP/2을 기본으로 보내고, 지원하지 않는 서버에는 HTTP/1.1을 사용한 요청을 보낸다
+        1) commons-codec
+            1. base64 인코딩, 디코딩에 활용
+            2. 인코딩: 정보를 다양 형태나 형식으로 변환 (표준화, 보안, 처리 속도 향상, 저장 공간 절감 등 목적)
+            3. base64 인코딩: binary data를 text 데이터로 변환 = 즉, character set에 영향을 받지 않는 공통 ASCII 영역 문자로만 이루어진 문자열로 바꾸는 인코딩 방식이다.
+        2) httpCore
+            1. httpCore: 요청 및 응답 처리 같은 핵심 기능 처리
+            2. httpClient: 기본 헤더, 쿠키 처리, 인증 처리, 캐싱 같은 부가 기능 처리
+
+    6. poi-ooxml, poi
+        1. MS OFFICE 파일 포맷을 순수 자바 언어로 읽고 쓰는 기능을 제공한다.
+        2. HSSF: Excel 97-2007 파일 포맷
+        3. XSSF: Excel 2007~ 파일 포맷
+        4. workbook: 엑셀 파일 한 개를 표현하는 단위
+        5. sheet: 엑셀 파일 내부의 시트 한 개를 표현하는 단위
+        6. Row: Sheet 행
+        7. Cell: Sheet 열
+        8. 엑셀파일 생성하기
+            1. make workbook
+            2. make sheet in workbook
+            3. make row in sheet
+            4. make cell in sheet
+            5. put data
+            6. make keyset
+            7. put rowData to row (using keyset)
+            8. put cellData to cell (using keyset)
+
+    7. log4jdbc-log4j2-jdbc4
+        1. MyBatis 라이브러리는 내부적으로 JDBC - PreparedStatement 기능을 이용하여 SQL 언어를 처리한다. 따라서 SQL 언어에 전달되는 파라미터는 ? 형태로 치환된다.
+        2. 이 상태에서 SQL 로그를 제대로 확인하려면 log4jdbc-log4j2 라이브러리를 사용해야 한다.
+            1. 의존성 추가
+            2. 로그 설정 파일 추가
+                1. log4jdbc.log4j2.properties 파일 생성
+                2. 설정 작성
+                3. log4jdbc.spylogdelegator.name=net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
+            3. JDBC 연결 정보 수정
+                1. root-context.xml 파일 수정
+                2. 기존
+                3. 
+                    beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"
+                    beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"
+                4. 수정
+                5. 
+                    beans:property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"
+                    beans:property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"
+                6. 관련 옵션들
+                    *** jdbc.connection	열려있는 모든 번호와 연결 수립 및 해제 이벤트를 기록. 이는 연결 문제를 찾아내는데 매우 유용 (Connection Pool 설정)
+                    jdbc.audit	ResultSet을 제외한 모든 JDBC 호출 정보를 로그로 남긴다. 많은 양의 로그가 생성되므로 특별히 JDBC 문제를 추적해야 할 필요가 있는 경우를 제외하고는 사용을 권장하지 않는다.
+                    jdbc.resultset	ResultSet을 포함한 모든 JDBC 호출 정보를 로그로 남기므로 매우 방대한 양의 로그가 생성된다.
+                    *** jdbc.sqlonly	SQL문만을 로그로 남기며, PreparedStatement일 경우 관련된 argument 값으로 대체된 SQL문이 보여진다. (원래는 ? 로 표시되는데, log4j 덕분에 완전한 쿼리로 보여지는 것임)
+                    *** jdbc.resultsettable	SQL 결과 조회된 데이터의 table을 로그로 남긴다.
+                    * jdbc.sqltiming	SQL문과 해당 SQL을 실행시키는데 수행된 시간 정보(milliseconds)를 포함한다.
+    8. dom4j
+        1. 자바기반
+        2. 오픈소스 라이브러리
+        3. XML 문서를 분석하기 위하여 사용
+        4. DOM, SAX, XPath, XSLT 분석 가능
+        5. 사용법
+            1. Load XML File
+                1. when Parse File
+                2. when Parse String
+            2. make root element
+            3. make element 
+            4. make children element (= column)
+
+    9. JUnit5
+        1. 유닛 테스트 프레임워크
+        2. compile 타이밍에 jar 형태로 연결된다.
+        3. 구성
+            1. JUnit Platform
+                1. JVM 기반 테스트 프레임워크를 실행하는 기반. 테스트 엔진 API 제공
+            2. JUnit Jupiter
+                1. 테스트 코드 작성을 위한 프로그래밍 & 확장 모델을 제공
+            3. JUnit Vintage
+                1. 구버전 JUnit 호완성 제공 (JUnit 3~4 호환성 제공)
+        4. 스프링부트 2.2.x 버전부터 기본적으로 제공한다.
+        5. Mehtod Annotations
+            1. @Test
+            2. @ParameterizedTest
+            3. @RepeatedTest
+                1. 반복 테스트
+                2. @RepeatedTest(10)
+            4. @TestFactory
+                1. 동적 테스트
+            5. @TestTemplate
+                1. 테스트 케이스 템플릿
+        6. Lifecycle Annotations
+            1. @BeforeAll
+            2. @BeforeEach
+            3. @AfterEach
+            4. @AfterAll
+        7. TimeLimit Annotations
+            1. @Timeout
+                1. 지정된 시간을 초과하면 실패로 처리한다.
+                2. @Timeout(10) // 10초 경과하면 실패로 처리한다.
+                3. @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS) // 10000 밀리세컨드 경과하면 실패로 처리한다.
+        8. 실행순서 지정
+            1. @Order
+                1. 지정한 순서대로 테스트를 실행한다.
+                2. @Order(1), @Order(2) // @Order(1) 실행 후 (2) 실행한다.
+        9. 값을 확인하는 메서드
+            1. assertSame(A, B)
+                1. A, B가 같은 객체인지 확인
+            2. assertEquals(A, B)
+                1. A, B의 값이 같은지 확인
+            3. assertTrue(A)
+                1. A의 값이 true인지 확인
+            4. assertFalse(A)
+                1. A의 값이 false인지 확인
+            5. assertNull(A)
+                1. A의 값이 null인지 확인
+            6. assertNotNull(A)
+                1. A가 존재하는지 확인
+            7. assertAll(excutables...)
+                1. 모든 확인 구문
+            8. assertTimeout(duration, excutable)
+                1. 지정된 시간 안에 실행이 완료되는지 확인
+    10. MyBatis
+    11. Lombok
+        1. Annotations
+            1. @NonNull
+            2. @Getter / @Setter
+            3. @ToString
+            4. @EqualsAndHashCode
+            5. constructors
+                1. @NoArgsConstuctor
+                    1. 기본 생성자 생성 (= with no parameters)
+                2. @RequiredArgsConstructor
+                    1. with 1 parameters for each field that requires special handling.
+                    2. special handling
+                        1. All non-initialized final fields
+                        2. All @NonNull fields (also generates explicit null check)
+                3. @AllArgsConstructor
+                    1. 모든 필드를 포함하는 생성자 제공
+            6. @Data
+                1. @ToString
+                2. @EqualsAndHashCode
+                3. @Getter
+                4. @Setter
+                5. @RequiredArgsConstructor
+    12. Redis
+    13. configuration-processor
+    14. Security
+    15. Validation
+    16. Web
+    17. Log4j2
+    18. JDBC
+    19. JPA
+    20. AOP
+    21. Actuator
+
+
+2. runtime
+3. compileTest
+4. runtimeTest
