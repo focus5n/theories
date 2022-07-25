@@ -1,0 +1,7 @@
+*. resources
+
+    *. mapper
+    *. mybatis
+        -. mybatis-config.xml
+    *. application.yml
+    
