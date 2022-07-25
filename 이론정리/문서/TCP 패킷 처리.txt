@@ -1,0 +1,18 @@
+1. SYN 패킷 처리
+
+    *. TCP 통신 시 서버는 클라이언트로부터 받은 SYN 패킷을 BackLog Queue에 저장함.
+    *. 그 후 SYN+ACK를 응답함.
+    *. 서버가 SYN 패킷을 수신하고, SYN+ACK 패킷을 응답했음에도, 클라이언트가 ACK 패킷을 응답하지 않는다면 정해진 retry 횟수만큼 시도하고 안되면 timeout 처리한다.
+    *. 순간 접속자가 많은 경우, retry 값을 디폴트 값보다 줄인다면 동시처리 세션 수가 증가한다.
+
+    *. 1996년 이전 서버는 SYN Flooding 공격을 받아서 SYN Queue 공간이 가득 차면, 새로운 세션을 받지 못했다. 따라서 이 공격으로 낮은 대역폭으로도 서버를 다운시킬 수 있었다.
+    *. 이 문제를 해결하기 위해서 SYN 쿠키가 등장함.
+    *. SYN Queue가 가득 찬 상황에서 SYN 쿠키가 동작함. SYN 쿠키는 SYN 패킷을 큐에 저장하지 않고, 바로 클라이언트에게 SYN+ACK 패킷을 전송함.
+    *. 이 후 클라이언트로부터 받은 ACK의 Sequence Number를 확인하여 제대로 되어 +1이 되어 있다면 Accept Queue로 전송함.
+    *. 클라이언트로부터 ACK 패킷을 수신하면 Accept Queue에 저장함.
+    *. 이 상태까지 된다면 ESTABLISHED 상태가 됨.
+    *. 단, SYN 쿠키는 소규모 SYN Flooding을 예방하거나, 동시접속자가 많아졌을 경우 커널 튜닝을 통해서 해결하는 방법임.
+    *. 실제 일반적인 SYN Flooding 공격은 해당 설정으로 방어할 수 없음.
+    *. 단, 동시접속자가 많아졌어도 공유기를 사용하는 유저 일부는 접속이 불가능해질 수 있어서 잘 안 써먹는 이론임.
+
+    *. BackLog Queue = reqsk_queue = ACK BackLog = Listen BackLog = TCP BackLog
