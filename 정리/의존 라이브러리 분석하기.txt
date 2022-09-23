@@ -6,11 +6,11 @@
         1. reflection 기능을 활용할 때, object handling 목적으로 사용한다.
         2. property 복제를 간편하게 할 수 있다.
         3. Reflection/Introspection APIs 기능을 쉽게 사용하도록 Wrapper 역할이다.
-        1) commons-collections
-            1. 자바 컬렉션 프레임워크의 상속구조를 확장한다.
-        2) commons-logging
-            1. 인터페이스이므로 자체적으로 구현을 하지는 않는다.
-            2. Log4j, Java1.4Logging 같은 Logging API에 로깅 요청을 전달한다.
+            1) commons-collections
+                1. 자바 컬렉션 프레임워크의 상속구조를 확장한다.
+            2) commons-logging
+                1. 인터페이스이므로 자체적으로 구현을 하지는 않는다.
+                2. Log4j, Java1.4Logging 같은 Logging API에 로깅 요청을 전달한다.
 
     3. jaxen
         1. XPath: XML 문서의 특정 요소 혹은 속성에 접근하기 위한 경로를 지정하는 언어
